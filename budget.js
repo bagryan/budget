@@ -1,6 +1,7 @@
 angular.module('budgetApp', [])
-    .controller('BudgetController', function() {
-        var budget = this;
+    .controller('BudgetController', function () {
+        var budget = this,
+            expensesChart;
 
         budget.expenses = [
             {
@@ -36,4 +37,48 @@ angular.module('budgetApp', [])
         budget.remove = function (index) {
             this.expenses.splice(index, 1);
         };
+
+        budget.refreshCharts = function () {
+            var data = _.map(_.groupBy(budget.expenses, "category"), function (mapItem, mapKey) {
+                return {
+                    name: mapKey,
+                    y: _.reduce(mapItem, function (sum, reduceItem) { return sum + parseInt(reduceItem.amount) }, 0)
+                }
+            });
+            expensesChart.series[0].setData(data);
+        };
+
+        $(document).ready(function () {
+            var expensesChartContainer = $('#expensesChart').highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Expenses grouped by categories'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: "Part",
+                    colorByPoint: true,
+                    data: []
+                }]
+            });
+            expensesChart = expensesChartContainer.highcharts();
+            budget.refreshCharts();
+        });
     });
