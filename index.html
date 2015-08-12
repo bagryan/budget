@@ -16,6 +16,12 @@
     <script src="//code.highcharts.com/modules/exporting.js"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+
+    <style>
+        #expensesChart {
+            border: 1px solid lightgray;
+        }
+    </style>
 </head>
 <body>
 <div ng-controller="BudgetController as budget">
@@ -62,10 +68,6 @@
     </div>
     <div class="col-md-4">
         <h2>Charts & Statistics</h2>
-
-        <div>
-            <button type="button" class="btn btn-success" ng-click="budget.refreshCharts()">Refresh Charts</button>
-        </div>
 
         <div id="expensesChart"></div>
     </div>

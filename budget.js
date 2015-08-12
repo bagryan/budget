@@ -1,5 +1,5 @@
 angular.module('budgetApp', [])
-    .controller('BudgetController', function () {
+    .controller('BudgetController', ['$scope', function ($scope) {
         var budget = this,
             expensesChart;
 
@@ -38,11 +38,13 @@ angular.module('budgetApp', [])
             this.expenses.splice(index, 1);
         };
 
-        budget.refreshCharts = function () {
-            var data = _.map(_.groupBy(budget.expenses, "category"), function (mapItem, mapKey) {
+        budget.refreshCharts = function (expenses) {
+            var data = _.map(_.groupBy(expenses, "category"), function (mapItem, mapKey) {
                 return {
                     name: mapKey,
-                    y: _.reduce(mapItem, function (sum, reduceItem) { return sum + parseInt(reduceItem.amount) }, 0)
+                    y: _.reduce(mapItem, function (sum, reduceItem) {
+                        return sum + parseInt(reduceItem.amount)
+                    }, 0)
                 }
             });
             expensesChart.series[0].setData(data);
@@ -79,6 +81,10 @@ angular.module('budgetApp', [])
                 }]
             });
             expensesChart = expensesChartContainer.highcharts();
-            budget.refreshCharts();
+            $scope.expenses = budget.expenses;
+            budget.refreshCharts(budget.expenses);
+            $scope.$watch('expenses', function (expenses) {
+                budget.refreshCharts(expenses);
+            }, true);
         });
-    });
+    }]);
