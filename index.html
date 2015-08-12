@@ -1,0 +1,60 @@
+<!doctype html>
+<html ng-app="budgetApp">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Budget</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="budget.js"></script>
+
+    <script src="//code.highcharts.com/highcharts.js"></script>
+    <script src="//code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+<div ng-controller="BudgetController as budget">
+    <table class="table form-group">
+        <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Название</th>
+            <th>Сумма</th>
+            <th>Категория</th>
+            <td>
+                <button type="button" ng-click="budget.add()" class="btn btn-primary">+</button>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="e in budget.expenses">
+            <td>
+                <input type="text" ng-model="e.date" class="form-control">
+            </td>
+            <td>
+                <input type="text" ng-model="e.title" class="form-control">
+            </td>
+            <td>
+                <input type="text" ng-model="e.amount" class="form-control">
+            </td>
+            <td>
+                <input type="text" ng-model="e.category" class="form-control">
+            </td>
+            <td>
+                <button type="button" ng-click="budget.remove($index)" class="btn btn-danger">-</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"></td>
+            <td>
+                <button type="button" ng-click="budget.add()" class="btn btn-primary">+</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
