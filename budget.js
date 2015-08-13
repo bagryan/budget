@@ -38,8 +38,18 @@ angular.module('budgetApp', ['ngAnimate', 'ui.bootstrap'])
             list.splice(index, 1);
         };
 
-        budget.autocompleteItems = function (list, field) {
-            return _.keys(_.groupBy(list, field));
+        budget.autocompleteItems = function (list, field, value) {
+            var all = _.filter(_.keys(_.groupBy(list, field)), function (item) {
+                return (item != "undefined" && item != value);
+            });
+            if (!value || !value.length) {
+                return all;
+            } else {
+                return _.filter(all, function (item) {
+                    var re = new RegExp(value, 'gi');
+                    return item.match(re);
+                });
+            }
         };
 
         budget.refreshCharts = function (list) {
