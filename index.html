@@ -63,13 +63,13 @@
                     </span>
                 </td>
                 <td>
-                    <button type="button" ng-click="budget.remove($index)" class="btn btn-danger">-</button>
+                    <button type="button" ng-click="budget.remove(budget.expenses, $index)" class="btn btn-danger">-</button>
                 </td>
             </tr>
             <tr>
                 <td colspan="4"></td>
                 <td>
-                    <button type="button" ng-click="budget.add()" class="btn btn-primary">+</button>
+                    <button type="button" ng-click="budget.add(budget.expenses)" class="btn btn-primary">+</button>
                 </td>
             </tr>
             </tbody>

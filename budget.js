@@ -30,20 +30,20 @@ angular.module('budgetApp', ['ngAnimate', 'ui.bootstrap'])
             }
         ];
 
-        budget.add = function () {
-            this.expenses.push({});
+        budget.add = function (list) {
+            list.push({});
         };
 
-        budget.remove = function (index) {
-            this.expenses.splice(index, 1);
+        budget.remove = function (list, index) {
+            list.splice(index, 1);
         };
 
-        budget.autocompleteItems = function (expenses, field) {
-            return _.keys(_.groupBy(expenses, field));
+        budget.autocompleteItems = function (list, field) {
+            return _.keys(_.groupBy(list, field));
         };
 
-        budget.refreshCharts = function (expenses) {
-            var data = _.map(_.groupBy(expenses, "category"), function (mapItem, mapKey) {
+        budget.refreshCharts = function (list) {
+            var data = _.map(_.groupBy(list, "category"), function (mapItem, mapKey) {
                 return {
                     name: mapKey,
                     y: _.reduce(mapItem, function (sum, reduceItem) {
@@ -53,6 +53,8 @@ angular.module('budgetApp', ['ngAnimate', 'ui.bootstrap'])
             });
             expensesChart.series[0].setData(data);
         };
+
+        // Charts drawing
 
         $(document).ready(function () {
             var expensesChartContainer = $('#expensesChart').highcharts({
