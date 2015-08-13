@@ -10,6 +10,8 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.3.js"></script>
     <script src="budget.js"></script>
 
     <script src="//code.highcharts.com/highcharts.js"></script>
@@ -51,7 +53,14 @@
                     <input type="text" ng-model="e.amount" class="form-control">
                 </td>
                 <td>
-                    <input type="text" ng-model="e.category" class="form-control">
+                    <span dropdown keyboard-nav>
+                        <input type="text" ng-model="e.category" dropdown-toggle class="form-control">
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="choice in budget.autocompleteItems(budget.expenses, 'category')">
+                                <a ng-click="e.category = choice">{{choice}}</a>
+                            </li>
+                        </ul>
+                    </span>
                 </td>
                 <td>
                     <button type="button" ng-click="budget.remove($index)" class="btn btn-danger">-</button>

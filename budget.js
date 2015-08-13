@@ -1,4 +1,4 @@
-angular.module('budgetApp', [])
+angular.module('budgetApp', ['ngAnimate', 'ui.bootstrap'])
     .controller('BudgetController', ['$scope', function ($scope) {
         var budget = this,
             expensesChart;
@@ -36,6 +36,10 @@ angular.module('budgetApp', [])
 
         budget.remove = function (index) {
             this.expenses.splice(index, 1);
+        };
+
+        budget.autocompleteItems = function (expenses, field) {
+            return _.keys(_.groupBy(expenses, field));
         };
 
         budget.refreshCharts = function (expenses) {
